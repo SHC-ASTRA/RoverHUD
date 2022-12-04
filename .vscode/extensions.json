@@ -1,0 +1,12 @@
+{
+    "recommendations": [
+        "ms-python.python", //python ext
+        "ms-python.vscode-pylance", //python ext
+        "marklarah.pre-commit-vscode", //precommit ext
+        "ms-toolsai.jupyter", //python ext
+        "ms-toolsai.jupyter-keymap", //python ext
+        "ms-azuretools.vscode-docker", //docker ext
+        "njpwerner.autodocstring", //generates docstrings
+        "ms-toolsai.jupyter-renderers" //python ext
+    ]
+}
