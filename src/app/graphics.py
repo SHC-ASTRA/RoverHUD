@@ -1,11 +1,28 @@
 """Application graphics helper."""
 from abc import ABCMeta, abstractmethod
 import pyglet
-from pyglet.gl import glEnable, glDisable, GL_DEPTH_TEST, GL_CULL_FACE
+from pyglet.gl import glEnable, glDisable, GL_DEPTH_TEST, GL_CULL_FACE, GL_BLEND
+from pyglet.graphics import shader
 from pyglet.math import Mat4, Vec3
 
 NEAR = 0.1
 FAR = 3000
+
+
+class ShaderGroup(pyglet.graphics.Group):
+    """Class for managing ShaderPrograms through groups."""
+
+    def __init__(
+        self, shader_program: shader.ShaderProgram, order: int = 0, parent=None
+    ):
+        super().__init__(order, parent)
+        self.program = shader_program
+
+    def set_state(self):
+        self.program.use()
+
+    def unset_state(self):
+        self.program.stop()
 
 
 class AppRenderLayer(pyglet.graphics.Batch, metaclass=ABCMeta):
@@ -22,8 +39,8 @@ class AppRenderLayer(pyglet.graphics.Batch, metaclass=ABCMeta):
 
         """
         super().__init__()
-        self.resize(width, height)
         self.fov = fov
+        self.resize(width, height)
 
     @abstractmethod
     def resize(self, width: int, height: int):
@@ -118,6 +135,7 @@ class Background3D(AppRenderLayer):
         # Set 3D Render Options
         glEnable(GL_DEPTH_TEST)
         glEnable(GL_CULL_FACE)
+        glEnable(GL_BLEND)
         window.projection = self.projection
         window.view = self.view
 
