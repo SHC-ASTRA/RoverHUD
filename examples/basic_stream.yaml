@@ -1,0 +1,33 @@
+application:
+  options:
+    width: 1600
+    height: 900
+
+sources:
+  - roslibpy:
+      type: RosLibSource
+      rosbridge_host: localhost
+      rosbridge_port: 9000
+
+widgets:
+  - basic_stream:
+      type: StreamWidget
+      options:
+        launch: |
+          v4l2src device=/dev/video0 ! image/jpeg, width=640, height=360 ! jpegdec !
+          videoconvert ! video/x-raw, width=640, height=360, format=RGB !
+          appsink sync=false max-buffers=1 drop=true name=sink emit-signals=true
+        size:
+          width: 1600
+          height: 900
+
+  - waypoint_bar:
+      type: WaypointBarWidget
+      options:
+        size:
+          width: 1200
+          height: 50
+        position:
+          x: 200
+          y: 850
+        source: roslibpy
