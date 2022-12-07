@@ -37,11 +37,8 @@ class StreamWidget(widget.Widget):
             position (widget.Position, optional): _description_. Defaults to widget.Position().
 
         """
-        self.width = size.width
-        self.height = size.height
+        super().__init__(size, position)
         self.launch = launch
-        self.x = position.x
-        self.y = position.y
 
         self.image = None
         self.sprite = None

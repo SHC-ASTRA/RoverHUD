@@ -14,6 +14,12 @@ class Position(NamedTuple):
 
 
 class Widget(ABC):
+    def __init__(self, size: Size, position: Position = Position()):
+        self.width = size.width
+        self.height = size.height
+        self.x = position.x
+        self.y = position.y
+
     def register_widget(self, app: app.App):
         self.register(app)
 
